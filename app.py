@@ -143,7 +143,8 @@ st.markdown(
         50% { background-position: 100% 50%; }
         100% { background-position: 0% 50%; }
     }
-    /*download _button*/
+
+    /* Download button */
     div.stDownloadButton > button {
         background: linear-gradient(90deg, #008000, #00b36b, #33ff99);
         color: white !important;
@@ -286,9 +287,21 @@ elif phase.startswith("Phase 3"):
         uploaded = st.file_uploader("Upload CSV", type=["csv"])
         if uploaded is not None:
             user_df = pd.read_csv(uploaded)
+
+            # 🔹 Drop unwanted columns
+            user_df = user_df.drop(columns=["id", "diagnosis", "Unnamed: 32"], errors="ignore")
+
+            # 🔹 Keep only columns used for training
+            user_df = user_df[[c for c in columns if c in user_df.columns]]
+
+            # 🔹 Ensure same column order
+            user_df = user_df.reindex(columns=columns, fill_value=0)
+
+            # 🔹 Scale and predict
             scaled = scaler.transform(user_df)
             preds = model.predict(scaled)
             user_df["Prediction"] = ["Benign" if p == 1 else "Malignant" for p in preds]
+
             st.dataframe(user_df.head())
             csv_bytes = user_df.to_csv(index=False).encode("utf-8")
             st.download_button(" Download Results", data=csv_bytes, file_name="bulk_predictions.csv")
