@@ -81,6 +81,7 @@ st.markdown(
         margin-right: 10px !important;
         font-style: italic;
         font-weight: 500;
+        padding:10px 20px !important;
         transition: all 0.3s ease-in-out;
     }
     div[data-baseweb="tab-list"] button[aria-selected="true"] {
@@ -150,7 +151,7 @@ st.markdown(
         color: white !important;
         border: none;
         border-radius: 12px;
-        padding: 10px 25px;
+        padding: 15px 25px;
         font-weight: bold;
         font-style: italic;
         box-shadow: 0px 4px 12px rgba(0, 128, 0, 0.4);
@@ -348,4 +349,4 @@ elif phase.startswith("Phase 5"):
     st.code("uvicorn src.api:app --reload --port 8000", language="bash")
 
 st.markdown("---")
-st.caption("*✨ Built with ❤️ by Shakeela Shaik —  Streamlit ML App ✨*")
+st.caption("*✨ Built with knowledge by Shakeela Shaik —  Streamlit ML App ✨*")
